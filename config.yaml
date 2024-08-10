@@ -1,0 +1,45 @@
+# Configuration File for AI-Driven Intrusion Detection System
+
+dataset:
+  path: 'smartmednet2024.csv'  # Path to the dataset file
+
+preprocessing:
+  test_size: 0.2               # Proportion of the dataset to include in the test split
+  random_state: 42             # Random seed for reproducibility
+  scaling: 'standard'          # Type of feature scaling ('standard' or 'minmax')
+
+model:
+  type: 'CNN'                  # Type of model to use
+  input_shape: null            # To be determined based on data
+  layers:
+    - type: 'Conv1D'
+      filters: 64
+      kernel_size: 3
+      activation: 'relu'
+    - type: 'MaxPooling1D'
+      pool_size: 2
+    - type: 'Conv1D'
+      filters: 128
+      kernel_size: 3
+      activation: 'relu'
+    - type: 'MaxPooling1D'
+      pool_size: 2
+    - type: 'Flatten'
+    - type: 'Dense'
+      units: 128
+      activation: 'relu'
+    - type: 'Dense'
+      units: 1
+      activation: 'sigmoid'
+
+training:
+  epochs: 10                   # Number of epochs for training
+  batch_size: 32               # Batch size for training
+  optimizer: 'adam'            # Optimizer to use
+  loss: 'binary_crossentropy'  # Loss function
+  metrics:
+    - 'accuracy'               # Metrics to evaluate during training
+
+paths:
+  model_save_path: 'intrusion_detection_model.h5'  # Path to save the trained model
+  logs_path: 'training_logs.csv'                   # Path to save training logs
